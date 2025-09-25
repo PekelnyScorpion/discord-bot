@@ -1,22 +1,18 @@
 import discord
 from discord.ext import commands
-import asyncio
 import os
+import asyncio
 
-# Nastavení intentů
 intents = discord.Intents.default()
-intents.message_content = True
-intents.presences = True
-intents.members = True
 intents.voice_states = True
 intents.guilds = True
+intents.members = True
 
-# Vytvoření bota
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
 async def on_ready():
-    print(f"Přihlášen jako {bot.user}")
+    print(f"✅ Přihlášen jako {bot.user}")
 
 @bot.event
 async def on_voice_state_update(member, before, after):
@@ -24,14 +20,31 @@ async def on_voice_state_update(member, before, after):
         if not member.bot:
             voice_channel = after.channel
             vc = await voice_channel.connect()
-            audio_source = discord.FFmpegPCMAudio("servus.mp3")
-            vc.play(audio_source)
 
-            while vc.is_playing():
-                await asyncio.sleep(1)
+            # Získat jméno uživatele s velkým prvním písmenem
+            jmeno = member.display_name.capitalize()
+
+            # Mapování jmen na specifické hlášky
+            hlasky = {
+                "Lejtto": "hlasky/Lejtto.mp3",
+                "Lovable": "hlasky/Lovable.mp3"
+            }
+
+            # Vyber správnou hlášku
+            if jmeno in hlasky and os.path.exists(hlasky[jmeno]):
+                cesta = hlasky[jmeno]
+            else:
+                cesta = "hlasky/servus.mp3"
+
+            # Přehrát zvuk
+            if os.path.exists(cesta):
+                audio_source = discord.FFmpegPCMAudio(cesta)
+                vc.play(audio_source)
+
+                while vc.is_playing():
+                    await asyncio.sleep(1)
 
             await vc.disconnect()
 
-# Spuštění bota
+# Přihlášení bota pomocí tokenu z Renderu
 bot.run(os.getenv("DISCORD_TOKEN"))
-
