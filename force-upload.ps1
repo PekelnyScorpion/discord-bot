@@ -1,10 +1,10 @@
+# Přepnutí do složky s projektem
+Set-Location "E:\bot"
+
 # Nastavení proměnných
 $repoUrl = "https://github.com/PekelnyScorpion/discord-bot.git"
-$commitMsg = "🚀 Nahrání Discord bota"
+$commitMsg = "🚀 Přepsání GitHubu verzí z PC"
 $branch = "main"
-
-# Přejdi do složky s projektem
-Set-Location "E:\bot"
 
 # Inicializace Git (pokud není)
 if (-not (Test-Path ".git")) {
@@ -21,5 +21,5 @@ git add .
 # Commit
 git commit -m $commitMsg
 
-# Push na GitHub
-git push -u origin $branch
+# Přepsání GitHubu
+git push origin $branch --force
