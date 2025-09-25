@@ -23,18 +23,19 @@ async def on_voice_state_update(member, before, after):
                 print(f"❌ Chyba při připojení: {e}")
                 return
 
-            jmeno = member.display_name.capitalize()
+            jmeno = member.display_name.lower()
 
             hlasky = {
-                "Lejtto": "Lejtto.mp3",
-                "Lovable": "Lovable.mp3"
+                "lejtto": "Lejtto.mp3",
+                "lovable": "Lovable.mp3"
             }
 
             cesta = hlasky.get(jmeno, "servus.mp3")
 
-            print(f"🎧 Soubor k přehrání: {cesta}")
+            print(f"🎧 Uživatelské jméno: {member.display_name}")
+            print(f"🎧 Vybraná hláška: {cesta}")
             print(f"📂 Absolutní cesta: {os.path.abspath(cesta)}")
-            print(f"📂 Existuje: {os.path.exists(cesta)}")
+            print(f"📂 Soubor existuje: {os.path.exists(cesta)}")
 
             if os.path.exists(cesta):
                 try:
