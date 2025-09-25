@@ -1,8 +1,9 @@
 import discord
 from discord.ext import commands
 import asyncio
+import os
 
-# ✅ Správné nastavení intentů
+# Nastavení intentů
 intents = discord.Intents.default()
 intents.message_content = True
 intents.presences = True
@@ -10,7 +11,7 @@ intents.members = True
 intents.voice_states = True
 intents.guilds = True
 
-# ✅ Vytvoření bota s intentama
+# Vytvoření bota
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
@@ -23,7 +24,7 @@ async def on_voice_state_update(member, before, after):
         if not member.bot:
             voice_channel = after.channel
             vc = await voice_channel.connect()
-            audio_source = discord.FFmpegPCMAudio(r"E:\servus.mp3")
+            audio_source = discord.FFmpegPCMAudio("servus.mp3")
             vc.play(audio_source)
 
             while vc.is_playing():
@@ -31,5 +32,6 @@ async def on_voice_state_update(member, before, after):
 
             await vc.disconnect()
 
-# ✅ Token bota
+# Spuštění bota
 bot.run(os.getenv("DISCORD_TOKEN"))
+
