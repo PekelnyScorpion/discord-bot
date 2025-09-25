@@ -1,5 +1,5 @@
 # Nastavení proměnných
-$repoUrl = "https://github.com/TVOJE_UZIVATELSKE_JMENO/discord-bot.git"
+$repoUrl = "https://github.com/PekelnyScorpion/discord-bot.git"
 $commitMsg = "🚀 Nahrání Discord bota"
 $branch = "main"
 
